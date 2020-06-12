@@ -1,0 +1,19 @@
+node* insert(int roll,char* name,node* head){
+    node* p=new node();
+    if(roll==1){
+        head = p;
+        head->next=NULL;
+        head->roll=roll;
+        head->name=name;
+        return head;
+    }
+    node* temp1 = head;
+    while(temp1->next!=NULL){
+        temp1=temp1->next;
+    }
+    temp1->next=p;
+    p->next=NULL;
+    p->name=name;
+    p->roll=roll;
+    return head;
+}
