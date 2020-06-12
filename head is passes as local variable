@@ -1,0 +1,143 @@
+struct node{
+    int roll;
+    string name;
+    node* next;
+};
+
+
+node* insert(int roll,char* name,node* head){
+    node* p=new node();
+    if(roll==1){
+        head = p;
+        head->next=NULL;
+        head->roll=roll;
+        head->name=name;
+        return head;
+    }
+    node* temp1 = head;
+    while(temp1->next!=NULL){
+        temp1=temp1->next;
+    }
+    temp1->next=p;
+    p->next=NULL;
+    p->name=name;
+    p->roll=roll;
+    return head;
+}
+
+
+void print(node* head){
+
+    //contains both iterative and recursive meathod
+    
+    //iterative
+   /* cout<<"\nThe list will be\n"<<endl;
+    node* temp1=head;
+    while(temp1->next!=NULL){
+        cout<<temp1->roll<<"  "<<temp1->name<<endl;
+        temp1=temp1->next;
+    }
+    cout<<temp1->roll<<"  "<<temp1->name<<endl;
+    temp1=temp1->next;*/
+
+    //recursive
+    while(head==NULL){
+        cout<<endl;
+        return;
+    }
+    cout<<head->roll<<"  "<<head->name<<endl;
+    print(head->next);
+}
+
+node* rev(node* temp1){
+
+    //iterative
+    /*node* rev1=NULL;
+    node* temp1=head;
+    node* temp2=head;
+    while(temp1!=NULL){
+        temp2=temp1->next;
+        temp1->next=rev1;
+        rev1=temp1;
+        temp1=temp2;
+    }
+    head=rev1;*/
+    
+    //recursive
+    if(temp1->next==NULL){
+        return temp1;
+    }
+    node* head =rev(temp1->next);
+    node* temp2 = temp1->next;
+    temp2->next=temp1;
+    temp1->next=NULL;
+    return head;
+}
+
+node* del(int n,node* head)
+{
+    node* temp1,* temp2;
+    temp1=head;
+    for(int i=1;i<n-1;i++){
+        temp1=temp1->next;
+    }
+    if(n==1){
+        head=head->next;
+        delete temp1;
+        return head;
+    }
+    temp2=temp1->next;
+    temp1->next = temp2->next;
+    delete temp2;
+    return head;
+}
+
+node* insert(int roll,string name,int psn,node* head)
+{
+    node* p= new node();
+    node* temp1=head;
+    if(roll==1){
+        p->next=head;
+        head=p;
+        p->name=name;
+        p->roll=roll;
+        return head;
+    }
+    for(int i=1;i<psn-1;i++){
+        temp1=(*temp1).next;
+    }
+    p->next=temp1->next;
+    temp1->next=p;
+    p->roll=roll;
+    p->name=name;
+    return head;
+}
+
+
+int main()
+{
+    //list of students containing name and roll number..
+    
+    node* head= NULL;
+    int i,n;
+    string k="anshul";
+    cout<<"enter the data one by one to store in  a list..\n";
+    cout<<"enter the no. of students whose data you want to store in a list : ";
+    cin>>n;
+    for(i=1;i<=n;i++){
+        char* p=new char[20];
+        cout<<"enter name of the "<<i<<"th student\n";
+        cin>>p;
+        head=insert(i,p,head);
+        delete p;
+    }
+    print(head);
+    head=del(1,head);
+    print(head);
+    head=insert(1,k,1,head);
+    print(head);
+    head=rev(head);
+    print(head);
+
+    return 0;
+}
